@@ -587,7 +587,7 @@ Follow the brand personality and platform rules strictly. Return only valid JSON
         })
       });
 
-      const data = await res.json();
+      const data = await res.json();  if (!res.ok) {   console.error("API ERROR:", data);   throw new Error(data.error?.message || JSON.stringify(data)); }
       const raw = data.content?.[0]?.text || "";
       const clean = raw.replace(/```json|```/g, '').trim();
       const parsed = JSON.parse(clean);
@@ -613,9 +613,11 @@ Follow the brand personality and platform rules strictly. Return only valid JSON
 
       output.classList.add('show');
       output.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } catch (e) {
-      errorEl.classList.add('show');
-      console.error(e);
+    catch (e) {
+  errorEl.textContent = "Error: " + (e.message || "Unknown error");
+  errorEl.classList.add('show');
+  console.error("FULL ERROR:", e);
+}
     } finally {
       btn.disabled = false;
       loading.classList.remove('show');
