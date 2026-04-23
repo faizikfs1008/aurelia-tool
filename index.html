@@ -612,8 +612,13 @@ Follow the brand personality and platform rules strictly. Return only valid JSON
       document.getElementById('hashtagCard').style.display = selectedPlatform === 'WhatsApp' ? 'none' : 'block';
 
       output.classList.add('show');
-      output.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    catch (e) {
+output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+} catch (e) {
+  errorEl.textContent = "Error: " + (e.message || "Unknown error");
+  errorEl.classList.add('show');
+  console.error("FULL ERROR:", e);
+}
   errorEl.textContent = "Error: " + (e.message || "Unknown error");
   errorEl.classList.add('show');
   console.error("FULL ERROR:", e);
