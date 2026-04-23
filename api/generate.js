@@ -11,29 +11,20 @@ export default async function handler(req, res) {
         "x-api-key": process.env.ANTHROPIC_API_KEY,
         "anthropic-version": "2023-06-01"
       },
-      body: JSON.stringify({
-        model: "claude-3-haiku-20240307",
-        max_tokens: 500,
-        messages: [
-          {
-            role: "user",
-            content: `Generate Instagram caption, hook, and hashtags for this jewelry:
-
-            ${JSON.stringify(req.body)}`
-          }
-        ]
-      })
+      body: JSON.stringify(req.body) // ✅ pass frontend data directly
     });
 
     const data = await response.json();
 
     if (!response.ok) {
+      console.error("Anthropic error:", data);
       return res.status(500).json({ error: data });
     }
 
     res.status(200).json(data);
 
   } catch (error) {
+    console.error("Server error:", error);
     res.status(500).json({ error: error.message });
   }
 }
